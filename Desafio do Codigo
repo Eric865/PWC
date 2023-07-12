@@ -1,0 +1,132 @@
+1	Reverta a ordem das palavras nas frases, mantendo a ordem das palavras.  
+A input a "Helo world | OpenAI é incrível"
+B Output "amazing is OpenAi World hello"
+
+def inverter_ordem(frase):
+    palavras = frase.split()
+    palavras_revertidas = palavras[::-1]
+    frase_invertida = ' '.join(palavras_revertidas)
+    return frase_invertida
+
+frase_input = "Helo world | OpenAI é incrível"
+frases = frase_input.split(" | ")
+
+frases_invertidas = []
+for frase in frases:
+    frase_invertida = inverter_ordem(frase)
+    frases_invertidas.append(frase_invertida)
+
+frase_output = " | ".join(frases_invertidas)
+print(frase_output)
+
+2  Remova todos os caracteres duplicados da string abaixo:
+a  input "Helo world" 
+b output " helo, Wrd"
+
+def remover_duplicados(string):
+    caracteres_unicos = []
+    for caractere in string:
+        if caractere.lower() not in caracteres_unicos:
+            caracteres_unicos.append(caractere.lower())
+    string_sem_duplicados = ''.join(caracteres_unicos)
+    return string_sem_duplicados
+
+input_string = "Helo world"
+output_string = remover_duplicados(input_string)
+print(output_string)
+
+3 encontra a substring palindroma mais longa na string abaixo: 
+A input "babad" 
+B output "bab"
+
+def encontrar_substring_palindroma(string):
+    tamanho_max = 0
+    inicio_max = 0
+
+    for i in range(len(string)):
+        # Verifica palíndromos de tamanho ímpar
+        tamanho_impar = expandir_palindromo(string, i, i)
+        if tamanho_impar > tamanho_max:
+            tamanho_max = tamanho_impar
+            inicio_max = i - (tamanho_impar // 2)
+
+        # Verifica palíndromos de tamanho par
+        tamanho_par = expandir_palindromo(string, i, i+1)
+        if tamanho_par > tamanho_max:
+            tamanho_max = tamanho_par
+            inicio_max = i - (tamanho_par // 2) + 1
+
+    substring_palindroma = string[inicio_max:inicio_max+tamanho_max]
+    return substring_palindroma
+
+
+def expandir_palindromo(string, esquerda, direita):
+    while esquerda >= 0 and direita < len(string) and string[esquerda] == string[direita]:
+        esquerda -= 1
+        direita += 1
+    return direita - esquerda - 1
+
+
+input_string = "babad"
+output_string = encontrar_substring_palindroma(input_string)
+print(output_string)
+
+4  Coloca em maiúsculo a primeira letra de cada frase na string.
+A  input " helo how are you? im firne, thank you" 
+B output " Helo How are you? im firne, thank you"
+
+def capitalizar_primeira_letra(frase):
+    nova_frase = ""
+    flag_capitalizar = True
+
+    for caractere in frase:
+        if flag_capitalizar and caractere.isalpha():
+            nova_frase += caractere.upper()
+            flag_capitalizar = False
+        else:
+            nova_frase += caractere
+
+        if caractere in ['.', '!', '?']:
+            flag_capitalizar = True
+
+    return nova_frase
+
+input_string = "helo how are you? im fine, thank you"
+frases = input_string.split(". ")
+
+frases_capitalizadas = []
+for frase in frases:
+    frase_capitalizada = capitalizar_primeira_letra(frase)
+    frases_capitalizadas.append(frase_capitalizada)
+
+output_string = ". ".join(frases_capitalizadas)
+print(output_string)
+
+5 verifique se a string é um anagrama de um palíndromo.
+A  input " racecar" 
+B output true
+
+def verificar_anagrama_palindromo(string):
+    contador_caracteres = {}
+    
+    for caractere in string:
+        if caractere in contador_caracteres:
+            contador_caracteres[caractere] += 1
+        else:
+            contador_caracteres[caractere] = 1
+    
+    num_impares = 0
+    
+    for contador in contador_caracteres.values():
+        if contador % 2 != 0:
+            num_impares += 1
+            if num_impares > 1:
+                return False
+    
+    return True
+
+input_string = "racecar"
+is_anagrama_palindromo = verificar_anagrama_palindromo(input_string)
+
+print(is_anagrama_palindromo)
+
